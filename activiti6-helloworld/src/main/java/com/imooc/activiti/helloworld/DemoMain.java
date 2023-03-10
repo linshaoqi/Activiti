@@ -31,26 +31,27 @@ public class DemoMain {
     public static void main(String[] args) throws ParseException {
         LOGGER.info("启动我们的程序");
         //创建流程引擎
-        ProcessEngineConfiguration cfg = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
+//        ProcessEngineConfiguration cfg = ProcessEngineConfiguration.createStandaloneInMemProcessEngineConfiguration();
+        ProcessEngineConfiguration cfg = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
         ProcessEngine processEngine = cfg.buildProcessEngine();
         String name = processEngine.getName();
         String version = ProcessEngine.VERSION;
         LOGGER.info("流程引擎名称{},版本{}", name, version);
-        // 部署流程定义文件
-        RepositoryService repositoryService = processEngine.getRepositoryService();
-        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
-        deploymentBuilder.addClasspathResource("second_approve.bpmn20.xml");
-        Deployment deployment = deploymentBuilder.deploy();
-        String deploymentId = deployment.getId();
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
-        LOGGER.info("流程定义文件 {}, 流程id {}", processDefinition.getName(), processDefinition.getId());
-        // 启动运行流程
-        RuntimeService runtimeService = processEngine.getRuntimeService();
-        ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-        LOGGER.info("流程启动 {}", processInstance.getProcessDefinitionKey());
-        //处理流程任务
-        processTask(processEngine, processInstance);
-        LOGGER.info("结束我们的程序");
+//        // 部署流程定义文件
+//        RepositoryService repositoryService = processEngine.getRepositoryService();
+//        DeploymentBuilder deploymentBuilder = repositoryService.createDeployment();
+//        deploymentBuilder.addClasspathResource("second_approve.bpmn20.xml");
+//        Deployment deployment = deploymentBuilder.deploy();
+//        String deploymentId = deployment.getId();
+//        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
+//        LOGGER.info("流程定义文件 {}, 流程id {}", processDefinition.getName(), processDefinition.getId());
+//        // 启动运行流程
+//        RuntimeService runtimeService = processEngine.getRuntimeService();
+//        ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
+//        LOGGER.info("流程启动 {}", processInstance.getProcessDefinitionKey());
+//        //处理流程任务
+//        processTask(processEngine, processInstance);
+//        LOGGER.info("结束我们的程序");
     }
     private static void processTask(ProcessEngine processEngine, ProcessInstance processInstance) throws ParseException {
         Scanner scanner = new Scanner(System.in);
